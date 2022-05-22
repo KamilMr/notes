@@ -1,3 +1,6 @@
+# JavaScript notes
+In general some notes on javascript. If you find it usefull use it :)
+
 ## Let
 
 "shadowing" when inner var shadows outer var.
@@ -22,11 +25,9 @@ ECMAScript is another name for JavaScript. We can think of var and scope as mist
 
 ### links
 
-prefer const
-[Esling|https://eslint.org/docs/rules/prefer-const]
+Set up eslint rules in
+[Eslint](https://eslint.org/docs/rules/prefer-const)
 
-no var
-[no var|https://eslint.org/docs/rules/no-var]
-
-
+Set up no var rule in
+[Eslint](https://eslint.org/docs/rules/no-var)
 
