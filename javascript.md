@@ -25,7 +25,7 @@ ECMAScript is another name for JavaScript. We can think of var and scope as mist
 
 ### links
 
-Set up eslint rules in
+Set up prefer const  eslint rules in
 [Eslint](https://eslint.org/docs/rules/prefer-const)
 
 Set up no var rule in
