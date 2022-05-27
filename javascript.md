@@ -61,5 +61,29 @@ so use `isNaN` `isNaN(Infinity) === false`
 
 isNaN also converts its argument to a number before checking.
 
+## Accessors in object literals
+Note the new get syntax in the next example. This kind of property is called a "getter".
+
+```javascript
+const user = {
+  get userName() { return 'Amir'; }
+};
+user.userName;
+```
+The getter function can compute anything that we want; it doesn't have to return a constant value.
+Setters, for writing to objects. Normally, writing to an object's key replaces the value at that key.
+```javascript
+const user = {
+  realName: 'Amir',
+  set userName(newName) { this.realName = newName; }
+};
+```
+
+If we try to read the value of a setter, we'll get undefined. The object has no value at that key, even though there is a setter for that key.
+But behind the scenes, our user.userName setter can store a history of what happened.
+
+One more small detail. The get and set keywords are required when creating getters and setters. If an object's keys are regular functions, then they won't be called like a getter or setter would. We'll get the old JavaScript behavior from before getters and setters even existed.
+
+
 ## general links
 [Execute program](https://www.executeprogram.com/)
