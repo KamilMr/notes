@@ -61,5 +61,37 @@ so use `isNaN` `isNaN(Infinity) === false`
 
 isNaN also converts its argument to a number before checking.
 
+## Basic object destructuring
+Check destructuring with getters. `const {name: newKey} = {name: 'Ala', ...}`
+
+## Shorthand properties
+In modern JavaScript, we can shorten this significantly. When the object's key refers to a variable of the same name, we only have to specify that name once. Instead of {name: name}, we can just write {name}
+
+We can't use this to refer to a variable that doesn't exist. As with the older syntax, that will cause an error.
+
+## Tagged template literals
+It looks like replaceWithHello`the numbers ${1} and ${1 + 1}`. (replaceWithHello is the function being used as a template literal tag.)
+
+```
+returnsItsArguments`1${2}3`;
+RESULT:
+{firstArg: ['1', '3'], secondArg: [2]}
+```
+The first argument contains all of the literal strings in the template literal (everything not in a ${...}). The second argument contains all of the interpolated values (everything inside a ${...}). Literal strings are passed as an array argument; interpolated values are passed as rest parameters.
+
+There will always be one more literal string than there are interpolated values. If there are 7 interpolated values, there will be 8 literal strings. If necessary, the last literal string will be an empty string, '', but it will still be there.
+
+[common tags](https://www.npmjs.com/package/common-tags)
+
+```
+const obj = {a: 1}
+`an object: ${obj}`;
+RESULT:
+ReferenceError: Cannot access 'obj' before initialization
+```
+JavaScript isn't parsing this code in the way we think it should. It thinks that the object {a: 1} is being used as a tag function for the template literal.
+
+
+
 ## general links
 [Execute program](https://www.executeprogram.com/)
