@@ -114,5 +114,42 @@ ReferenceError: Cannot access 'obj' before initialization
 ```
 JavaScript isn't parsing this code in the way we think it should. It thinks that the object {a: 1} is being used as a tag function for the template literal.
 
+## Places where destructuring is allowed
+Destructuring works in function definitions. The destructuring rules are the same as when we destructure in a const or let statement.
+
+```
+let userName = undefined;
+try {
+  throw {name: 'Amir'};
+} catch ({name}) {
+  userName = name;
+}
+```
+
+```
+function rest(_, ...rest) {
+  return rest;
+}
+rest(1, 2, 3);
+```
+```
+function rest([, ...rest]) {
+  return rest;
+}
+rest([1, 2, 3]);
+```
+
+## Shorthand methods
+
+```
+const user = {
+  name() { return 'Amir'; }
+};
+user.name();
+```
+Like one above.
+
+Shorthand methods have a this that refers to the parent object. We can access its properties by doing this.somePropertyName.
+
 ## general links
 [Execute program](https://www.executeprogram.com/)
