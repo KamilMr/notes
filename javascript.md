@@ -151,5 +151,44 @@ Like one above.
 
 Shorthand methods have a this that refers to the parent object. We can access its properties by doing this.somePropertyName.
 
+## Bind
+this refers to the object that a function belongs to. The rules get complex, but here's a simple example with shorthand methods.
+
+Sometimes, when writing JavaScript code, we'll get backed into a corner where we need to force a function to have a certain this. We can do exactly that with the bind method.
+
+bind is a method on functions themselves, so we say someFunction.bind(someNewThis). That gives us a new version of the function, leaving the original function unchanged. When we call the new function, this will be bound to our specified value.
+
+Example:
+```
+const user = {name: 'Amir'};
+function userName() {
+  return this.name;
+}
+const userNameBound = userName.bind(user);
+userNameBound();
+```
+## Concat
+
+ we can combine arrays properly with concat. (It stands for concatenate, which means "link together".) It creates a new array containing all of the elements from the old arrays.
+
+ concat takes multiple arguments, so we can combine many arrays if needed:
+
+
+concat can also be used to add single elements to the end of an array. If its argument isn't an array, it will be added as a single element.
+
+concat builds and returns a new array. The original arrays aren't changed.
+
+
+## New and fill
+
+The fill method fills an array with a given value. Any existing values will be overwritten by that value.
+
+```
+const size = 1 + 2;
+new Array(size).length;
+```
+If we ask for its elements, we'll get undefined.
+
+
 ## general links
 [Execute program](https://www.executeprogram.com/)
