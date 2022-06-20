@@ -189,6 +189,18 @@ new Array(size).length;
 ```
 If we ask for its elements, we'll get undefined.
 
+## Map
+It returns a new array of the values returned from those function calls.
+
+## Arrays are objects
+Most programming languages have an array data type that's separate from the language's other data types. JavaScript is unusual here: in JavaScript, arrays are a special type of object. We can see this by looking at typeof someArray, which will return 'object', just like it does for regular objects.
+
+```
+const arr = ['a', 'b', 'c'];
+arr['five'] = 5;
+arr.length;
+```
+A couple more details about extra properties on arrays. First, looping with forEach will ignore extra array properties.
 
 ## general links
 [Execute program](https://www.executeprogram.com/)
