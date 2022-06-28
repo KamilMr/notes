@@ -167,6 +167,43 @@ function userName() {
 const userNameBound = userName.bind(user);
 userNameBound();
 ```
+## Sets
+
+Sometimes, we want to know whether a value is in a list of other values. We can use an array.
+The includes method loops through the entire array, checking each element. If there are 10,000 elements, it will loop up to 10,000 times.
+`includes: 0(n)` so ex what if element is at the end of an Array?
+
+JavaScript's Set data type is a better solution to this problem. A JavaScript set is a collection, it's ordered, and it contains only unique values. We'll look at each of those in order.
+
+### First
+First, sets are collections: they contain a bunch of JavaScript values. We can give a set an initial set of values in its constructor. Then we can add() more values later. We can ask a set whether it has() a given value.
+
+
+### Second
+JavaScript sets are ordered. If we examine the elements in the set, they'll always come back in the order that they were inserted.
+To get the elements out of the set, we can use the values method. It returns an iterator, which we haven't covered yet. We can ignore the iterator for now by converting it into an array with Array.from().
+
+```
+const names = new Set(['Amir', 'Betty']);
+Array.from(names.values());
+```
+
+Sets are mathematical objects studied in set theory, the modern form of which dates to the 1870s. Most programming languages, including JavaScript, provide a set type with operations that would've been familiar to the set theorist Georg Cantor (1845 - 1918).
+
+JavaScript's sets are ordered, as we saw above. This isn't a case of JavaScript being weird in a way that's confusing. If anything, preserving order is desirable; it's one less uncertainty to track in our code.
+
+In JavaScript, you can count on a set to remember the elements' insertion order.
+
+### The third
+Property of sets is: they contain only unique values. If we add a value that already exists in the set, nothing happens; the set is unchanged.
+
+The set has: size property, can be deleted() clear()
+
+The main power of sets isn't in converting them back into arrays; it's that calling has is very fast.
+
+An array's includes method slows down as the array gets larger. But sets don't have that problem! A set's has() method is O(1): it always takes the same amount of time regardless of how many elements there are.
+
+
 ## Concat
 
  we can combine arrays properly with concat. (It stands for concatenate, which means "link together".) It creates a new array containing all of the elements from the old arrays.
@@ -201,6 +238,35 @@ arr['five'] = 5;
 arr.length;
 ```
 A couple more details about extra properties on arrays. First, looping with forEach will ignore extra array properties.
+
+
+## Slice
+Sometimes we want to access a subsection of an array. For that, we use the slice method. It takes an argument begin, which is the index to start from.
+
+ It slices all elements from begin up to end, but not including end.
+
+ We can slice beyond the end of the array. It gives the same result as slicing right up to the last element.
+
+If our begin index is past the end of the array, we get an empty result.
+
+With no arguments, slice will slice all elements of the array. This effectively copies the array. If we change the original, it won't affect the copy. Likewise, if we change the copy, it won't affect the original.
+
+Slice is quite complex, but copying arrays is its most common use.
+
+## Classes
+JavaScript gained a new class syntax in 2015, making it more familiar to programmers who already know common object-oriented languages like Java, C#, Python, or Ruby.
+
+If you already know an object-oriented language, this first lesson on classes might be very easy. But we'll soon turn to issues that are specific to JavaScript's version of classes.
+
+Classes describe the shape of an object: what properties and methods (functions) it has. Class method definitions look like the shorthand method syntax that we already saw in literal objects: methodName() { ... }.
+
+We construct an instance of a class with new: new MyClass(). The instance is an object with all of the properties and methods (functions) specified by the class.
+
+The new keyword is required when instantiating classes: new Cat(...). If we try to create a Cat by calling the class like a function, we'll get an error.
+
+JavaScript's native object system is prototype-based, which is unusual and therefore unfamiliar to a lot of programmers. We haven't mentioned that object system here precisely because it's so unusual. Prototypes are better viewed as an advanced topic, to be studied once the more "normal" parts of modern JavaScript are familiar. However, the class-based syntax in this lesson is only "syntactic sugar": it's a new syntax layered over the older prototype-based object system.
+
+When possible, we recommend using classes rather than prototypes because they're more widely understood. Occasionally, you'll be forced to dig down into the prototype system, especially when dealing with older JavaScript code or very unusual kinds of objects.
 
 ## general links
 [Execute program](https://www.executeprogram.com/)

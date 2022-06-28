@@ -84,3 +84,28 @@ When our syntax is correct, the compiler checks semantics (types). "That tree is
 
 In TypeScript, a + b is valid syntax. But if a is a number and b is a boolean, then a + b won't type check.
 
+## Object types
+myObject.someProperty will return undefined if someProperty doesn't exist.
+The most common symptom is the "undefined is not a function" error when we do myObject.someProperty().
+
+we can't use expressions like 1 + 1 or true || false in a type. That would be a syntax error because expressions are never allowed in types.
+
+```JavaScript
+type User = {
+  email: string
+  admin: boolean
+};
+let amir: User = {
+  email: 'amir@example.com',
+  admin: true,
+};
+```
+
+## Tuples
+TypeScript supports tuples, which are arrays of fixed length. For example, [number, number] is a tuple of two numbers. It must be exactly two numbers; not one and not three. If the length doesn't match, it's a type error.
+
+Tuples can have different types in each index. This is different from arrays, where every element must have the same type.
+
+## Generic Arrays
+`Array<number>` Array types like Array<number> are an example of generics. We can think of Array as a type with a "hole" in it. An array of numbers, Array<number>, fills the hole with the number type. An array of strings, Array<string>, fills the hole with the string type.
+
