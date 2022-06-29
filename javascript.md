@@ -189,6 +189,78 @@ new Array(size).length;
 ```
 If we ask for its elements, we'll get undefined.
 
+## Extending classes
+JavaScript classes can extend (inherit from) other classes: class MySubclass extends MySuperclass. The subclass will have all of the properties and methods of the superclass, plus any properties and methods that it defines itself.
+
+The superclass and subclass can define their own separate constructors. That lets us centralize shared setup code in the superclass, avoiding duplication in its subclasses. The subclass' constructor calls the superclass' constructor with super(), passing whatever arguments the superclass' constructor requires.
+
+Calling super is mandatory: if the subclass has a constructor, it has to call super at some point during the constructor. Otherwise, newing the subclass will cause an error. This rule holds even when the superclass doesn't actually define a constructor; we still have to call super!
+
+```javascript
+class Animal { }
+class Cat extends Animal {
+  constructor(name) {
+    this.name = name;
+  }
+}
+new Cat('Ms. Fluff').name;
+RESULT:
+```
+ReferenceError: Must call super constructor in derived class before accessing 'this' or returning from derived constructor
+
+We can use instanceof to check for whether an object is an instance of a given class.
+
+`instanceof` understands subclasses: x instanceof Y is true when x is an instance of any subclass of Y.
+
+```javascript
+class Animal { }
+class Cat extends Animal { }
+const cat = new Cat();
+cat instanceof Animal;
+```
+Subclasses can define properties or methods that already exist on the superclass. When that happens, the subclass' version "overrides", or replaces, the superclass' version.
+
+Some languages have "multiple inheritance": they allow a class to inherit from multiple other classes at once. Python and C++ are examples. In JavaScript, there is no syntax for multiple inheritance, so we won't discuss it here.
+
+When inheritance is appropriate. Object-oriented programming was very popular in the 1990s, sometimes promoted with an almost religious fervor. That fervor has died down now. We recommend viewing classes, and especially inheritance, as just another tool. Like any tool, it's important not to reach for them when they're not needed. Here's an example from React JS, a popular JavaScript UI library.
+
+## Function name property
+
+`function f()`
+Functions declared like this have a name property.
+
+`f.name` is `'f'`
+Functions don't have to have names, though. If a function is created without a name, its name will be the empty string, ''. These are called "anonymous" functions.
+
+The function remembers its original name, even if it's assigned to a different variable.
+
+Anonymous functions only get a name if they're assigned directly to a variable. If we put the function in an array, for example, it won't get the array's name; instead, it will have no name.
+
+Arrow function syntax doesn't give us any place to specify the function's name. As a result, arrow functions are always anonymous. However, like normal functions, they do get a name if they're assigned directly to a variable.
+
+## flat and flatMap
+
+By default, flat only flattens one level of arrays. Any arrays nested more deeply than one level are left unmodified.
+The default depth is 1.
+
+The depth can be Infinity, in which case flat will flatten all arrays no matter how deeply nested they are.
+
+flat only flattens arrays. Non-array values are left unmodified. For example, we might have an array of objects, where the objects contain more arrays. In that case, both the objects and the arrays inside the objects are left unchanged.
+
+When you start using flat, you'll often find that you combine it with map.
+
+This kind of flat-map combination is common enough that there's a method that does both operations together: flatMap. It's identical to calling map followed by flat.
+
+```javascript
+>
+[
+  {numbers: [1, 2]},
+  {numbers: [3, 4]},
+].flatMap(obj => obj.numbers);
+RESULT:
+[1, 2, 3, 4]
+```
+Both flat and flatMap build and return a new array. The original array remains unmodified.
 
 ## general links
 [Execute program](https://www.executeprogram.com/)
