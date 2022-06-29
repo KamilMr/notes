@@ -53,6 +53,59 @@ add1(2);
 ## Arrays
 Array types are marked with []. An array of numbers is number[], string[].
 
+## Type keyword
+We can declare our own names for types using the type keyword. It looks similar to declaring a variable with let. By convention, user-defined type names are UpperCamelCased.
+
+```
+type MyStringType = string; // TypeScript syntax only
+let s: MyStringType = 'hello';
+```
+Each TypeScript program is a valid JavaScript program, but with extra annotations: the types. After checking types, the TypeScript compiler generates JavaScript by removing all TypeScript-specific syntax from a program. Then, the result is run as JavaScript.
+
+TypeScript compiler throws the types away is important. Most notably, it means that there's no way to inspect types at runtime. Types are only used during type checking, then they're thrown away.
+
+*type erasure* the types are used for type checking
+
 ### errors
 -type error: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+
+
+## Return type inference
+Inference only means that the compiler can determine the types for us.
+
+## Syntax errors vs type errors
+
+Difference js ts => In JavaScript, any code with valid syntax will run. In TypeScript, code must have valid syntax and must type check. Only then will it run.
+What's the difference between a syntax error and a type error? We can think of it by analogy to English. "Vase triangle avocado cat grape" is not valid English syntax. Each of those words is part of English, but they can't be in that order. No English sentence can be made of five nouns in a row.
+
+Likewise, function return class if var is invalid TypeScript syntax. Each of those words is part of TypeScript, but they can't be in that order. If we try to compile that "code", the compiler rejects its syntax. The type checker never even runs.
+
+When our syntax is correct, the compiler checks semantics (types). "That tree is angry" is valid English syntax, but doesn't "type check". Trees can't be angry (outside of fantasy novels).
+
+In TypeScript, a + b is valid syntax. But if a is a number and b is a boolean, then a + b won't type check.
+
+## Object types
+myObject.someProperty will return undefined if someProperty doesn't exist.
+The most common symptom is the "undefined is not a function" error when we do myObject.someProperty().
+
+we can't use expressions like 1 + 1 or true || false in a type. That would be a syntax error because expressions are never allowed in types.
+
+```JavaScript
+type User = {
+  email: string
+  admin: boolean
+};
+let amir: User = {
+  email: 'amir@example.com',
+  admin: true,
+};
+```
+
+## Tuples
+TypeScript supports tuples, which are arrays of fixed length. For example, [number, number] is a tuple of two numbers. It must be exactly two numbers; not one and not three. If the length doesn't match, it's a type error.
+
+Tuples can have different types in each index. This is different from arrays, where every element must have the same type.
+
+## Generic Arrays
+`Array<number>` Array types like Array<number> are an example of generics. We can think of Array as a type with a "hole" in it. An array of numbers, Array<number>, fills the hole with the number type. An array of strings, Array<string>, fills the hole with the string type.
 
