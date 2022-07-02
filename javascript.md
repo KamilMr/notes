@@ -340,5 +340,43 @@ JavaScript's native object system is prototype-based, which is unusual and there
 
 When possible, we recommend using classes rather than prototypes because they're more widely understood. Occasionally, you'll be forced to dig down into the prototype system, especially when dealing with older JavaScript code or very unusual kinds of objects.
 
+## Empty slots
+When we use new Array, the array appears to be full of undefined.
+
+However, the slot in this array is actually empty. Empty means that there's nothing in the slot, not even an undefined. But JavaScript has no empty value, so it returns undefined instead.
+
+
+We can use the in operator to see the empty array slot. (For arrays, x in a asks whether the array has something in index x.)
+
+```javascript
+0 in [undefined];
+RESULT: true
+```
+but
+```javascript
+0 in new Array(1);
+RESULT:
+false
+```
+
+```javascript
+const array = [];
+array[2] = 1;
+array.length;
+RESULT: 3
+```
+The 0 and 1 slots in this array remain empty. They'll return undefined when accessed.
+
+fill will fill in those empty slots. That's why it's so often paired with new Array(). This is a good way to avoid arrays with empty slots.
+
+Empty slots can cause confusing bugs. For example, the `forEach ` and `map` method will skip over empty slots. It won't even call our provided function for those slots.
+
+However, undefined is an ordinary JavaScript value. Array methods work normally with arrays containing undefined.
+
+
+`reduce`, `filter`, and some other methods also skip empty slots. Try to avoid arrays with empty slots:
+- Always using fill after calling new Array(someSize).
+- Not writing to indexes past the end of an array.
+
 ## general links
 [Execute program](https://www.executeprogram.com/)
