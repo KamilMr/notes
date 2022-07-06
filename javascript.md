@@ -340,6 +340,45 @@ JavaScript's native object system is prototype-based, which is unusual and there
 
 When possible, we recommend using classes rather than prototypes because they're more widely understood. Occasionally, you'll be forced to dig down into the prototype system, especially when dealing with older JavaScript code or very unusual kinds of objects.
 
+## Includes
+We can check for whether an array includes a given element.
+
+## Slice with negative arguments
+We can slice from the end of the array by using negative indexes. You can think of a negative index -2 as array.length - 2. Or you can think of it as "two away from the end".
+
+```javascript
+>
+[10, 20].slice(-2);
+RESULT:
+[10, 20]
+```
+With negative indexes, we can also slice before the beginning of the array. The result will only include elements in the original array. It won't invent additional elements to satisfy our out-of-bounds index.
+
+```javascript
+[10, 20].slice(-100);
+RESULT:
+[10, 20]
+```
+
+Both begin and end can be negative. The end element isn't included in the slice.
+
+## Some and every
+The some method decides whether a function is true of any element in an array. For example: "are any of these numbers two?" Or "are any of these strings empty?"
+
+some always returns false for an empty array. This might seem strange, but it makes some sense.
+
+"Are some of these people named Amir?" If we ask that about a person named Amir, the answer is yes. If we ask about a person named Betty, the answer is no. If we ask it about no people at all, the answer is no; there's no Amir.
+
+every is true if our function is true for every element in the array.
+
+every always returns true for an empty array. One way to remember this is that every's behavior for empty lists is the opposite of some's behavior.
+
+- `[].every(f)` is true, no matter what f is.
+- `[].some(f)` is false, no matter what f is.
+
+`!['a', 'bc', 'def'].some(string => string.length === 0);`
+example to check some object
+
 ## Empty slots
 When we use new Array, the array appears to be full of undefined.
 
