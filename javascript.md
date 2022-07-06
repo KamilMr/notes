@@ -378,5 +378,50 @@ However, undefined is an ordinary JavaScript value. Array methods work normally 
 - Always using fill after calling new Array(someSize).
 - Not writing to indexes past the end of an array.
 
+## Index of
+We can ask an array for the index of a particular value. (Indexes start at 0, as usual.)
+
+If the value occurs multiple times in the array, we'll get the index of the first occurrence.
+
+If we ask for an element that isn't in the array, we get -1.
+
+It's important to check your indexOf calls for that -1 return value! Otherwise you can introduce subtle bugs.
+
+## Reduce
+
+We're "reducing" our array of many numbers to a single number.
+
+We pass two arguments to reduce. The first is a function that adds a new number to our running sum. The second argument is 0, the initial value for the sum.
+
+function is called once for each number. Each time, it adds the number to the running sum. We can see this by instrumenting our function to store all of the sums. (The verb "instrument" means "attach measurement instruments to". It's a great way to learn how unfamiliar systems work!)
+
+We can make our reduce call shorter by omitting the second argument. Then array element 0 will be used as the sum. For many uses of reduce, including computing sums, that's OK.
+
+
+With no second argument, our function is never called for array element 0. To sum [1, 20, 300], this happens:
+
+- sum is set to element 0 of the array, which is 1.
+- callback(1, 20) is called, returning 21 as the new sum.
+- callback(21, 300) is called, returning 321 as the new sum.
+- There are no more array elements, so reduce returns 321.
+
+What happens if we try to reduce an empty array of numbers? If we provide an initial value as the second argument to reduce, then reduce can simply return that number. If the initial value is 0, we'll get 0 out.
+
+
+When empty array and no second argument
+```javascript
+[].reduce(
+  (sum, current) => sum + current,
+);
+RESULT:
+TypeError: Reduce of empty array with no initial value
+```
+When you're using reduce, it's important to think about what happens when the array is empty. Otherwise, you may find yourself surprised if you see the error shown above.
+
+Reduce is a very abstract method: it can do many different things. The ways to use abstract methods aren't always obvious at first. But once you're comfortable with them, you see applications everywhere.
+
+acc stands for "accumulator", because it's accumulating the result.
+
+Don't be afraid to use reduce in simple cases. But sometimes you'll struggle to read or write a complex reduce. In those cases, it's best to give up on the reduce and use a loop. Six easy lines of loop code are better than one confusing reduce line!
 ## general links
 [Execute program](https://www.executeprogram.com/)
