@@ -462,5 +462,13 @@ Reduce is a very abstract method: it can do many different things. The ways to u
 acc stands for "accumulator", because it's accumulating the result.
 
 Don't be afraid to use reduce in simple cases. But sometimes you'll struggle to read or write a complex reduce. In those cases, it's best to give up on the reduce and use a loop. Six easy lines of loop code are better than one confusing reduce line!
+
+## Filter
+In procedural languages, we often make decisions inside loops. JavaScript is a procedural language.
+
+filter calls a function on each element in an array. If the function returns true, then filter keeps that element. Otherwise, it discards the element.
+
+filter builds a new array. The original array isn't changed.
+
 ## general links
 [Execute program](https://www.executeprogram.com/)
