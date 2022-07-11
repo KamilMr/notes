@@ -470,5 +470,64 @@ filter calls a function on each element in an array. If the function returns tru
 
 filter builds a new array. The original array isn't changed.
 
+## Reduece right
+reduce processes array items from left to right. There's also a less-common variant called reduceRight. With reduceRight, the array is processed from right to left.
+
+However, reduceRight does matter when the order of operations matters.
+
+##Shift
+shift and unshift do the same, but for the beginning of the array. shift removes the first element of the array and returns it.
+
+unshift adds an element to the beginning of an array.
+
+unshift returns the array's length, including the newly-added element. This matches push, which also returns the array's length.
+
+shift and unshift have somewhat confusing names. Here's one way to remember them. shift "shifts" all of the elements down by one. Index 2 becomes index 1; index 1 becomes index 0; etc. unshift does the opposite.
+
+Like pop and push, shift and unshift change the array itself.
+
+## Find index
+The indexOf method gives us the index of an element.
+
+Sometimes, we don't know the complete value of the element that we want. For example, maybe we want to find the first non-empty string. For that, we can use findIndex.
+
+```javascript
+['', 'a'].findIndex(
+  string => string.length !== 0
+);
+```
+It's OK if multiple elements match our provided function. findIndex will find the first matching element.
+
+The callback function passed to findIndex gets three arguments. Usually you only need the first, which is the current array element. But sometimes the others are useful too. The second argument is the element's index in the array.
+
+The whole array is passed to our callback as its third argument. This is rarely needed, but it's there just in case.
+
+If our function doesn't match any elements, findIndex returns -1. This is like indexOf, which returns -1 when nothing is found. As with indexOf, this can be a source of bugs. Remember to check for -1!
+
+## Short
+
+The sort method puts elements in order. It changes the array that it's called on. In the example below, the array will be sorted alphabetically.
+
+Often, we want a sorted copy of an array without changing the original. We can use slice() to copy the array, then sort the copy.
+
+JavaScript often converts values in surprising ways. For example, 10 > 3 is true, but '10' < '3' is also true. This is because strings are compared character by character. The comparison ends as soon as two characters differ. '1' < '3', so '10' < '3'. The '0' in '10' is never even examined.
+
+sort converts the array's elements to strings, then compares them. Because it compares strings, it inherits the comparison problem above.
+
+This makes JavaScript's sort unsafe for numbers and most other data. Most other programming languages don't have this problem, so be careful!
+
+```javascript
+[3, 10].sort();
+RESULT:
+[10, 3]
+```
+There's a way to fix this problem. We can write our own comparison function, then give it to sort. Our function takes two array elements (a, b) as arguments and returns:
+
+- If a == b, then a - b == 0.
+- If a > b, then a - b > 0.
+- If a < b, then a - b < 0.
+
+If you can remember the a - b part, you can probably remember this trick. However, you'll probably also forget the order of the a and b. Sometimes, you'll write (a, b) => b - a. It's fine; everyone forgets the order. Just check it in the console when the time comes.
+
 ## general links
 [Execute program](https://www.executeprogram.com/)
