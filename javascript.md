@@ -529,5 +529,120 @@ There's a way to fix this problem. We can write our own comparison function, the
 
 If you can remember the a - b part, you can probably remember this trick. However, you'll probably also forget the order of the a and b. Sometimes, you'll write (a, b) => b - a. It's fine; everyone forgets the order. Just check it in the console when the time comes.
 
-## general links
+## Anonymous and inline classes
+
+```javascript
+class Cat { }
+Cat.name;
+RESULT:
+'Cat'
+```
+
+```javascript
+const cat = new (
+  class {
+    speak() {
+      return 'yaong';
+    }
+  }
+)();
+cat.speak();
+RESULT:
+'yaong'
+```
+When we try to inspect the name of an anonymous class, we'll get the empty string ('').
+
+If we immediately assign the class to a variable, that variable's name will become the class' name. This is the same behavior that we saw for anonymous functions.
+
+```javascript
+const Cat = class { };
+Cat.name;
+RESULT:
+'Cat'
+```
+
+```javascript
+const classes = [class { }];
+classes[0].name;
+RESULT:
+''
+```
+
+Craze example:
+```javascript
+onst classes = [];
+classes.push(class { });
+classes.push(class extends classes[0] { });
+const ParentClass = classes[0];
+const ChildClass = classes[1];
+new ChildClass() instanceof ParentClass;
+RESULT: true
+```
+We've seen classes and functions behave similarly with regards to the name property. Here's why they're so similar:
+
+```javascript
+typeof (class Cat { });
+RESULT: 'function'
+```
+Internally, JavaScript classes are just functions. The implications of that are complex and, to be honest about it, pretty confusing. But we just saw one implication: when we assign an anonymous class directly to a variable, that variable's name becomes the class' name. That's not because classes and functions follow the same rule; it's because classes ARE functions!
+
+Classes can be anonymous (have no name), and they can be inline (the class definition itself is used as an expression). Both of those are uncommon. You certainly won't use them in most of the modules that you write. But they are used in real systems, so you'll encounter them eventually!
+
+## Modern JavaScript: JSON stringify and parse
+
+In the past, we had to use third-party libraries to read and write JSON. Fortunately, modern versions of JavaScript include built-in JSON support.
+
+The stringify method turns an object into a JSON string. By default, it will pack the JSON tightly. For example, there's no space after the : in the stringified object above. The parse method turns a JSON string back into an object.
+
+If we try to parse a string that isn't valid JSON, we'll get an error.
+
+JSON stands for "JavaScript object notation". However, not all JavaScript object syntax is valid JSON.
+
+[Details|https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON]
+
+The full details of JSON's syntax are out of scope for this course, but we'll examine one quick example to make the point. JavaScript object keys don't have to be quoted, but JSON keys do require quotes. If we try to parse a JSON string with unquoted object keys, we'll get an error.
+
+The JSON methods will parse and stringify any JSON-compatible value, not just objects. They work on arrays, strings, numbers, etc.
+
+```javascript
+JSON.parse(JSON.stringify([true, null]));
+RESULT: [true, null]
+```
+undefined is an important special case because it's not allowed in JSON. When we call stringify, any undefineds in the original object will be turned into nulls. If we then parse the resulting JSON, we'll get a null out. The JSON contains no hints that there ever was an undefined.
+
+JSON can't represent circular objects (objects that reference themselves). Here's an example of a circular object.
+
+Sometimes, we'll want an object to specify how it should be serialized to JSON. We can do that by putting a function in its toJSON property. JSON.stringify will call that function and use its result rather than the original object.
+
+```javascript
+const user = {
+  name: 'Amir',
+  toJSON: () => 'This is Amir!'
+};
+JSON.parse(JSON.stringify(user));
+RESULT: 'This is Amir!'
+```
+The toJSON function isn't responsible for actually converting to JSON; stringify will still do that part. Instead, toJSON returns a new JavaScript object to be serialized in place of the original.
+
+## Modern JavaScript: String keyed methods
+However, if we put quotes around the method's name, then it can contain spaces and even punctuation!
+
+If a method name contains spaces or punctuation, then we can't call it with the usual someObject.methodName syntax. We'll have to use someObject['methodName'].
+
+```javascript
+const user = {
+  'name of the ~user~'() { return 'Betty'; }
+};
+user['name of the ~user~']();
+RESULT: 'Betty'
+```
+This method definition syntax is called "string keyed methods" because we're using the normal JavaScript string syntax to define the method's name (its key in the object).
+
+Modern JavaScript has good Unicode support, so ordinary methods work with non-English characters as well. For example, we can name our method "名前", the Japanese word for "name".
+
+However, we can't use normal syntax to name the method 名前。. The "。" character is a Japanese period, which is punctuation, and punctuation isn't allowed in JavaScript identifiers. Including that character will result in an error.
+
+String keyed methods also work in class definitions. This is a recurring theme: syntax that works in object literal methods will generally work inside class definitions as well.
+
+## General links
 [Execute program](https://www.executeprogram.com/)
