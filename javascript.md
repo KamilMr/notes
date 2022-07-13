@@ -644,5 +644,25 @@ However, we can't use normal syntax to name the method 名前。. The "。" char
 
 String keyed methods also work in class definitions. This is a recurring theme: syntax that works in object literal methods will generally work inside class definitions as well.
 
+## Modern JavaScript: Set operations
+
+Sets in every programming language provide a range of useful operations that are missing in JavaScript. Normally, sets have at least the three most common operations: union, intersection, and difference. It's OK if those aren't familiar; in this lesson, we'll define them and see how to implement them in JavaScript.
+
+First: we sometimes want to find a set union, which is every element that's in either set1 or set2. The closest array equivalent is concat.
+
+Set union is the same thing, but it respects the constraint that a set only contains unique values. If the concat operation above were a set union, we'd expect a result of [1, 2, 3, 4].
+
+```javascript
+const set1 = new Set([1, 2, 3]);
+const set2 = new Set([2, 3, 4]);
+const unionSet = new Set([...set1, ...set2]);
+[unionSet.has(1), unionSet.has(4)];
+```
+Second: we sometimes want to find a set intersection, which is every element that's in both set1 and set2. With arrays, we can use filter to do that. (filter takes a function f, calls it on every array element, and returns an array with all of the elements where f(element) was true.)
+
+"set difference" means "all items that are in the first set, but aren't in the second set."
+
+Set union is different from array concatenation because it results in a set, which has no duplicates. Set intersection and difference both do the same things as the array versions. But they're better than our array versions because they're much faster. (Using the technical terminology: all of the set operations implemented here are O(n), but our array equivalents are O(n^2).)
+
 ## General links
 [Execute program](https://www.executeprogram.com/)
