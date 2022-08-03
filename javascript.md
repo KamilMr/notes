@@ -664,5 +664,40 @@ Second: we sometimes want to find a set intersection, which is every element tha
 
 Set union is different from array concatenation because it results in a set, which has no duplicates. Set intersection and difference both do the same things as the array versions. But they're better than our array versions because they're much faster. (Using the technical terminology: all of the set operations implemented here are O(n), but our array equivalents are O(n^2).)
 
+## Modern JavaScript: Accessor properties on classes
+
+We can also use accessors in classes. As with object literals, a getter's function will be called when we access the property.
+
+```javascript
+class User {
+  constructor(name) {
+    this.actualName = name;
+  }
+
+  get name() {
+    return `${this.actualName} the user`;
+  }
+}
+new User('Betty').name;
+
+class User {
+  constructor(name) {
+    this.actualName = name;
+  }
+
+  set name(newName) {
+    this.actualName = newName;
+  }
+}
+const user = new User('Amir');
+user.name = 'Betty';
+user.actualName;
+```
+
+When we extend a class, the child inherits any getters and setters from the parent.
+
+
+
+
 ## General links
 [Execute program](https://www.executeprogram.com/)
