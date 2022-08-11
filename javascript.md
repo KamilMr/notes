@@ -696,8 +696,14 @@ user.actualName;
 
 When we extend a class, the child inherits any getters and setters from the parent.
 
+## Modern JavaScript: Spread
+There, ... means "include that array's elements into this array".
 
+We can spread multiple arrays in a single expression. The elements will occur in the order they were specified.
 
+Order matters when setting object keys. When defining an object literal, the last value assigned to a key wins:
+
+Order of object keys also matters with spread. The last instance of a key wins, even if it comes from a spread.
 
 ## General links
 [Execute program](https://www.executeprogram.com/)
