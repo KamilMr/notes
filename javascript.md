@@ -705,5 +705,37 @@ Order matters when setting object keys. When defining an object literal, the las
 
 Order of object keys also matters with spread. The last instance of a key wins, even if it comes from a spread.
 
+## Modern JavaScript: Default parameters
+If we call a JavaScript function with an argument missing, the corresponding parameter will get the value undefined.
+
+Modern JavaScript has native support for default function arguments, so we don't need to do that trick any more. Defaults are declared using an = inside the function parameter list.
+
+Defaults are evaluated when the function is called, not when it's defined. They can even reference other arguments.
+
+Some other programming languages handle defaults differently. Python is a notable example: in Python, the default value is evaluated only once, when the function is defined. The above example would be illegal in Python because the value of x can't be known when the function is defined. If you know Python, be very careful because this difference can lead you to introduce subtle bugs!
+
+Default parameters also work in methods on classes.
+
+Any value can be used as a default. For example, we can use an object as a default value.
+
+When we say "any value", we mean it! For example, we can even use an inline anonymous class as the default value.
+
+We can use destructuring together with defaults. The default can even refer to a value that we get by destructuring another argument.
+
+```javascript
+addObjects({x: 1});
+RESULT: 2
+```
+
+## Modern JavaScript: Class scoping
+
+We usually define classes at the top level of a module. However, classes follow the same scoping rules as regular variables. We can define them inside a function, or even inside a conditional.
+
+Just to be clear: there are very few cases where a class should be defined in a function. There are even fewer (and maybe none) where a class should be defined inside a conditional. But JavaScript allows us to do these things!
+
+When classes are defined dynamically, like inside a function, the class definition itself can see all of the variables that are currently in scope. For example, a class defined inside a function can reference the function's arguments.
+
+we can't define a class inside another class. That will cause an error, whether we use the class or not.
+
 ## General links
 [Execute program](https://www.executeprogram.com/)
