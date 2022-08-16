@@ -737,5 +737,139 @@ When classes are defined dynamically, like inside a function, the class definiti
 
 we can't define a class inside another class. That will cause an error, whether we use the class or not.
 
+## Modern JavaScript: Static methods
+
+It's also possible to define methods on classes themselves, which are called "static methods".
+
+```javascript
+>
+class User {
+  constructor(name) {
+    this.name = name;
+  }
+
+  static defaultNames() {
+    return ['Amir', 'Betty', 'Cindy'];
+  }
+}
+```
+
+The difference here is that the method exists on the User variable itself, rather than on an object created with const user = new User();
+
+Sometimes, we'll want multiple ways to create instances of a class. For example, we might want to have a separate function for creating administrator users (as opposed to regular, non-admin users). A JavaScript class can only have one constructor, so we can't do it that way. But we can use static methods as a substitute.
+
+```javascript
+class User {
+  constructor(name, isAdmin=false) {
+    this.name = name;
+    this.isAdmin = isAdmin;
+  }
+
+  static newAdmin(name) {
+    return new User(name, true);
+  }
+}
+
+[new User('Amir').isAdmin, User.newAdmin('Betty').isAdmin];
+RESULT:
+[false, true]
+```
+Accessors (getters and setters) can also be static. That means that the getter or setter is accessible on the class itself, not on instances.
+
+If we try to access a static accessor on an instance, it won't be there. But we won't get an error; we'll just get undefined. That's because accessing an object property that doesn't exist always gives us undefined, regardless of the object.
+
+Inside of a static method or accessor, this refers to the class itself.
+
+The name "static" doesn't mean that these methods and properties always return the same value. They can return any value that we like, even if it changes over time. For example, we can define a static setter and getter pair.
+
+## Modern JavaScript: Property order
+In many languages, properties in objects don't have a guaranteed order. (Some languages call their object-like data structures "hashes" or "dictionaries", but for our purposes here these are all the same thing.)
+
+Consistent ordering is nice; it's one less thing to think about. Fortunately, modern versions of JavaScript guarantee object key ordering!
+
+An object's keys will be in the order that they were defined in the object.
+
+If we add more keys to the object after it exists, the ordering is preserved there too.
+
+Object key order is even preserved when we deserialize JSON with JSON.parse.
+
+JSON.stringify preserves that order as well, so round-tripping an object through JSON won't change its keys' order.
+
+There's one exception to the property order rule. It comes from an unusual part of JavaScript objects: they can have numbers as keys, and we can mix number keys with strings keys in the same object.
+
+When an object has number keys, (1) they always come first in the key list, (2) they're always sorted numerically, and (3) they're always converted into strings (1 becomes '1'). The string keys come next, in the order that they were inserted into the object, as we've already seen in this lesson.
+
+
+```javascript
+Object.keys({2: 'two', 1: 'one'});
+RESULT:
+['1', '2']
+>
+Object.keys({b: 'b', 1: 'one', a: 'a'});
+RESULT:
+['1', 'b', 'a']
+```
+This number-vs-string issue is an unfortunate complication. However, the good news is that objects with mixed number and string keys are uncommon, so this doesn't come up much. For normal objects with string keys, you can trust that they'll stay in insertion order.
+
+## Modern JavaScript: Customizing JSON serialization
+
+JSON.stringify allows us to customize its output by passing a second argument, replacer. If we give it an array of strings, then only those keys will be included in the resulting object.
+
+```javascript
+JSON.parse(
+  JSON.stringify(
+    {age: 36, city: 'Paris', name: 'Amir'},
+    ['name', 'city']
+  )
+);
+RESULT: {city: 'Paris', name: 'Amir'}
+```
+
+The replacer can also be a callback function taking two arguments, key and value. During stringification, our replacer is called with the key and value for each object, array, string, etc. We can replace any value by simply returning the new value that should take its place.
+
+```javascript
+SON.stringify(
+  {age: 36, name: 'Amir', cat: {name: 'Ms. Fluff'}},
+  (key, value) => {
+    console.log(`Key: ${JSON.stringify(key)}, value: ${JSON.stringify(value)}`);
+    return value;
+  }
+);
+console output
+  17 ms  Key: "", value: {"age":36,"name":"Amir","cat":{"name":"Ms. Fluff"}}
+  18 ms  Key: "age", value: 36
+  19 ms  Key: "name", value: "Amir"
+  20 ms  Key: "cat", value: {"name":"Ms. Fluff"}
+  21 ms  Key: "name", value: "Ms. Fluff"
+```
+
+The first replacer call gets the entire object. The key is "" because we're not inside of an object yet. Then we see separate calls for the age, name, and cat keys. Finally, stringify descends into the cat object, so we get a final call for its name key. We didn't replace any data in this example, but we could've replaced the data in any of these steps, from the entire object down to a single deeply nested property.
+
+At each step, our replacer function can do three things:
+
+  - Return the value argument unmodified, which won't change anything.
+  - Return some other value, which will replace the original value in the stringified JSON.
+  - Return undefined, which will remove the key from the stringified JSON.
+
+There are some more details of the replacer function, but we won't cover them here. If you need to write a JSON.stringify replacer, you should definitely have the [documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)open anyway! The important thing to know is that it exists, and that the replacer function gets a chance to modify every part of the object as it's stringified. That's enough to know when this tool is appropriate.
+
+Finally, JSON.parse has a similar feature called reviver. Conceptually, it's the opposite of JSON.stringify's replacer argument. As the JSON is decoded, the reviver can replace any value with a new value.
+
+```javascript
+/* Note that the "reviver" function here replaces all property values in
+ * the object! */
+JSON.parse(
+  '{"name": "Amir", "age": 36}',
+  (key, value) => {
+    if (key === '') {
+      return value;
+    } else {
+      return 'nevermind';
+    }
+  }
+);
+RESULT:
+{age: 'nevermind', name: 'nevermind'}
+```
 ## General links
 [Execute program](https://www.executeprogram.com/)
