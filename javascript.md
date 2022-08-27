@@ -871,5 +871,40 @@ JSON.parse(
 RESULT:
 {age: 'nevermind', name: 'nevermind'}
 ```
+
+## Modern JavaScript: Computed methods and accessors
+
+As usual, this feature exists on classes as well. We can create methods, static methods, accessors, and static accessors, all with computed names. Those names can be built up using any JavaScript expression.
+
+```javascript
+
+class User {
+  constructor(name) {
+    this.name = name;
+  }
+
+  static [['get', 'User', 'Name'].join('')](user) {
+    return user.name;
+  }
+}
+
+User.getUserName(new User('Cindy'));
+RESULT: 'Cindy'
+```
+
+What if we define the class, then change the value that was used to compute a method name? For example, if a method name comes from a variable, we might give that variable a new value.
+
+That won't have any effect: once the class is defined, the computed method names aren't re-evaluated. There are ways to change methods after a class is defined, but computed method names aren't one of them!
+
+(Remember that accessing an object property that doesn't exist will return undefined.)
+
+If the class is created dynamically inside a function, we can use the function's arguments to name the class's accessors and methods.
+
+Computed method names are confusing because they break one of our assumptions: "I can look at the class to see what methods it has". Fortunately, they're not used very often!
+
+Computed method names are confusing because they break one of our assumptions: "I can look at the class to see what methods it has". Fortunately, they're not used very often!
+
+However, you'll encounter computed methods and accessors eventually, especially in library or framework code that needs to be very generic. When you do encounter them, the rule is relatively simple: when the class is being constructed, the virtual machine evaluates the string to get the method or accessor name. After the class is defined, those names won't change.
+
 ## General links
 [Execute program](https://www.executeprogram.com/)
