@@ -906,5 +906,22 @@ Computed method names are confusing because they break one of our assumptions: "
 
 However, you'll encounter computed methods and accessors eventually, especially in library or framework code that needs to be very generic. When you do encounter them, the rule is relatively simple: when the class is being constructed, the virtual machine evaluates the string to get the method or accessor name. After the class is defined, those names won't change.
 
+## Modern JavaScript: Symbol basics
+Most JavaScript data types can't be used as object keys. For example, if we try to use true as a key, it gets converted into the string 'true'.
+
+If an object already has the key 'true', and we try to add true as a key, we'll only end up overwriting the value that already exists at true. The object will still have only one key at the end: 'true'.
+
+Modern versions of JavaScript have alleviated this limitation somewhat by adding symbols. Symbols are a new data type that can be used in object keys. We'll begin by exploring the basics of how symbols work, then move on to using them as keys.
+
+We can define a symbol by giving it a description: Symbol('name') or Symbol('dataIsSynced'). The description should say what the symbol is used for.
+
+Symbol equality works like array equality. A given array is always equal to itself. Likewise, a given symbol is always equal to itself.
+
+Two arrays are never equal to each other, even if they contain the same elements. Likewise, two symbols are never equal to each other, even if they have the same description.
+
+Now that we've seen the basics of symbols, we can start using them as object keys. But how exactly do we get a symbol key into an object? If we store it in a nameSymbol variable, and then say {nameSymbol: 1}, then the unquoted nameSymbol key is just a string. The key will be 'nameSymbol' and the nameSymbol variable won't be referenced at all.
+
+To use the symbol itself as a key, we can use computed property syntax: {[nameSymbol]: ...}. Then, to access a symbol key, we can do user[nameSymbol]. (Trying to access it with user.nameSymbol would have the same problem as before: it would look up the value at the string key 'nameSymbol'.
+
 ## General links
 [Execute program](https://www.executeprogram.com/)
