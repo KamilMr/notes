@@ -923,5 +923,35 @@ Now that we've seen the basics of symbols, we can start using them as object key
 
 To use the symbol itself as a key, we can use computed property syntax: {[nameSymbol]: ...}. Then, to access a symbol key, we can do user[nameSymbol]. (Trying to access it with user.nameSymbol would have the same problem as before: it would look up the value at the string key 'nameSymbol'.
 
+Symbol descriptions are usually strings, so it's tempting to think of symbols as just a special kind of string. But that's a mistake! Here's an example of why:
+
+We can use the string `name` as an object key. We can also use the symbol Symbol('name') as an object key. An object can have both of those keys at once, with each holding a different value!
+
+```javascript
+const nameString = 'name';
+const nameSymbol = Symbol('name');
+const user = {
+  [nameString]: 'Amir',
+  [nameSymbol]: 'Betty'
+};
+[user['name'], user[nameSymbol]];
+RESULT:
+['Amir', 'Betty']
+```
+
+## Modern JavaScript: Builtin Symbols
+
+JavaScript defines several symbols for us. These are used for metaprogramming, which means "changing the behavior of a program using code". Using these built-in symbols, we can modify how JavaScript runs our code. Here's one example:
+
+```javascript
+const user = {name: 'Dalili'};
+user.toString();
+RESULT:
+'[object Object]'
+```
+The string '[object Object]' isn't very informative, but we can change this behavior if we like.
+
+When we call .toString() on an object, the JavaScript runtime looks for a property on that object named Symbol.toStringTag. If that property exists, the runtime puts it inside the '[object ...]' string.
+
 ## General links
 [Execute program](https://www.executeprogram.com/)
