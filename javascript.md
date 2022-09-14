@@ -973,5 +973,75 @@ This is a very convenient part of symbols. If implementation details like Symbol
 
 Fortunately, neither of those problems occurs because JSON.stringify ignores symbol properties. Other well-behaved data serialization tools will also ignore symbol properties.
 
+## Modern JavaScript: Defining iterators
+
+At a glance, it seems like for-of loops have specific knowledge about arrays and strings. But they don't! Instead, JavaScript defines a more general way to access the elements of a datatype in a particular order. Arrays, strings, and some other data types are "iterables": loops (and other constructs) can iterate over them. ("Iterate" means "perform repeatedly".)
+
+There are rules about how iteration works. The thing being iterated over (like an array, a string, or a custom object that we define) exposes certain methods. Then, the thing doing the iteration (like a for-of loop) calls those methods. As long as both sides agree on what the methods are, the iteration works.
+
+There are rules about how iteration works. The thing being iterated over (like an array, a string, or a custom object that we define) exposes certain methods. Then, the thing doing the iteration (like a for-of loop) calls those methods. As long as both sides agree on what the methods are, the iteration works.
+
+There are rules about how iteration works. The thing being iterated over (like an array, a string, or a custom object that we define) exposes certain methods. Then, the thing doing the iteration (like a for-of loop) calls those methods. As long as both sides agree on what the methods are, the iteration works.
+
+There are rules about how iteration works. The thing being iterated over (like an array, a string, or a custom object that we define) exposes certain methods. Then, the thing doing the iteration (like a for-of loop) calls those methods. As long as both sides agree on what the methods are, the iteration works.
+
+First, we get an iterator from the letters array by calling the Symbol.iterator method. (Symbol.iterator is a special symbol defined by the language itself, used only for this purpose.)
+
+The iterator object has a next method. Calling that will give us one element of the array. The element is wrapped up in an object that provides both the element value and a done flag to tell us whether there's more data remaining.
+
+Get an iterator by calling letters[Symbol.iterator]().
+Call the iterator's next method repeatedly.
+When next().done is true, stop and throw the iterator away.
+
+```javascript
+class NumbersBelowThree {
+  [Symbol.iterator]() {
+    return new NumberIterator();
+  }
+}
+
+class NumberIterator {
+  constructor() {
+    this.value = 0;
+  }
+
+  next() {
+    if (this.value < 3) {
+      const value = this.value;
+      this.value += 1;
+      return {value, done: false};
+    } else {
+      return {value: undefined, done: true};
+    }
+  }
+}
+
+const numbers = [];
+for (const n of new NumbersBelowThree()) {
+  numbers.push(n);
+}
+numbers;
+RESULT:
+[0, 1, 2]
+```
+
+The class approach and the object approach are both fine. In some situations, one will be a better match than the other. But in many cases, it's a matter of preference, or of choosing what you're more familiar with. Or, if you're updating existing code, it's probably best to work within the existing design, whether it's class-based or object-based.
+
+Generators can be used here.
+
+The entire process of iterating is governed by the two "iteration protocols". ("Protocol" means "an agreed-upon procedure".)
+
+Protocol 1 is the "iterable protocol". That means that an object has a Symbol.iterator method. Arrays, strings, and our custom objects above follow the iterable protocol.
+
+Protocol 2 is the "iterator protocol". That means that an object has a next method, which in turn returns an object {value, done}. Our NumberIterator class and the object returned by our makeIterator function both follow the iteration protocol. So do the iterators that we get by doing someArray[Symbol.iterator]().
+
+We can think of a for-of loop in terms of the two protocols:
+
+It uses the iterable protocol to get a fresh iterator.
+It uses the iterator protocol to consume that iterator.
+It discards the iterator because it's now used up.
+
+These terms are all confusingly similar: the iterable protocol and iterator protocol combine to make up the iteration protocols. You'll probably mix them up; we definitely mix them up. They're only correct in this lesson because we checked and re-checked the docs many times. This is fine; the important part is how they work, not what they're called!
+
 ## General links
 [Execute program](https://www.executeprogram.com/)
