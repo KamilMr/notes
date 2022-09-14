@@ -953,5 +953,25 @@ The string '[object Object]' isn't very informative, but we can change this beha
 
 When we call .toString() on an object, the JavaScript runtime looks for a property on that object named Symbol.toStringTag. If that property exists, the runtime puts it inside the '[object ...]' string.
 
+## Modern JavaScript: Problems with object keys
+
+JavaScript object keys must be strings, numbers, or symbols.
+
+When object is a key then  it's automatically converted into a string via its .toString() method. But the default .toString() method always returns '[object Object]'. All five cities are converted into that string, so the object only has that one string as a key!
+
+This is a big problem: it significantly limits our ability to model complex relationships between data. Fortunately, JavaScript has a solution: the map data type, which we'll see in another lesson coming up soon!
+
+## Modern JavaScript: Symbols are metadata
+
+Before symbols, object property names were always strings, which was nice and simple. Now they can be strings or symbols. Why bother adding this complication?
+
+The answer is that Symbols let us draw an important distinction: symbols are "out of band data", or "metadata". They're not a normal part of the object.
+
+For example, when we serialize an object with JSON.stringify, symbol properties are ignored completely. Only the regular string properties are serialized. After round-tripping an object into JSON and back, none of the symbol properties remain.
+
+This is a very convenient part of symbols. If implementation details like Symbol.toStringTag did show up in JSON, that could cause our API responses to be excessively large, hurting performance. Worse, if we happen to store any sensitive information in symbol properties, then including them in API responses could cause security problems.
+
+Fortunately, neither of those problems occurs because JSON.stringify ignores symbol properties. Other well-behaved data serialization tools will also ignore symbol properties.
+
 ## General links
 [Execute program](https://www.executeprogram.com/)
