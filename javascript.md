@@ -1043,5 +1043,31 @@ It discards the iterator because it's now used up.
 
 These terms are all confusingly similar: the iterable protocol and iterator protocol combine to make up the iteration protocols. You'll probably mix them up; we definitely mix them up. They're only correct in this lesson because we checked and re-checked the docs many times. This is fine; the important part is how they work, not what they're called!
 
+## Values and variables
+Variables are not values.
+Variables point to values.
+Rules of Assignment
+1. left must be variable
+2. The right side of an assignment must be an expression, so it always results in a value. Our expression can be something simple, like 2 or 'hello'. It can also be a more complicated expression
+
+expresion is a question to JavaScript. 2 is expresion and is called literals.
+
+We can’t really pass variables to functions. We pass the current value of the variable, for example `'pet'`.
+It turns out that a variable name like pet can serve as an expression too! When we write pet, we’re asking JavaScript a question: “What is the current value of pet?” To answer our question, JavaScript follows pet “wire,” and gives us back the value at the end of this “wire.”
+
+You need to have clarity on what you can do with each JavaScript concept in your head.
+
+We can’t point variables to each other! Variables always point to values.
+
+   - Primitive values are immutable. They’re a permanent part of our JavaScript universe—we can’t create, destroy, or change them. For example, we can’t set a property on a string value because it is a primitive value. Arrays are not primitive, so we can set their properties.
+
+   - Variables are not values. Each variable points to a particular value. We can change which value it points to by using the = assignment operator.
+
+   - Variables are like wires. A “wire” is not a JavaScript concept—but it helps us imagine how variables point to values. When we do an assignment, there’s always a wire on the left, and an expression (resulting in a value) on the right.
+
+   - Look out for contradictions. If two things that you learned seem to contradict each other, don’t get discouraged. Usually it’s a sign that there’s a deeper truth lurking underneath.
+
+   - Language matters. We’re building a mental model so that we can be confident in what can or cannot happen in our universe. We might speak about these ideas in a casual way (and nitpicking is often counterproductive) but our understanding of the meaning behind the terms needs to be precise.
+
 ## General links
 [Execute program](https://www.executeprogram.com/)
