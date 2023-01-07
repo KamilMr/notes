@@ -1069,5 +1069,23 @@ We can’t point variables to each other! Variables always point to values.
 
    - Language matters. We’re building a mental model so that we can be confident in what can or cannot happen in our universe. We might speak about these ideas in a casual way (and nitpicking is often counterproductive) but our understanding of the meaning behind the terms needs to be precise.
 
+## BigInts
+In our JavaScript universe, there is an infinite number of BigInts—one for each integer in math.
+
+BigInts are great for financial calculations where precision is especially important.
+
+## Strings
+Primitive, immutable.
+
+## Symbols
+Symbols like door keys: they hide away some information inside an object and control which parts of code can access it.
+
+## Primitives some facts:
+- Not all numbers can be perfectly represented in JavaScript. Their decimal part offers more precision closer to 0, and less precision further away from it.
+- Numbers from invalid math operations like 1 / 0 or 0 / 0 are special. NaN is one of such numbers. They may appear due to coding mistakes.
+- `typeof(NaN)` is a number because NaN is a numeric value. It’s called “Not a Number” because it represents the idea of an “invalid” number.
+
+## Garbage collector
+JavaScript doesn’t offer guarantees about when garbage collection happens.
 ## General links
 [Execute program](https://www.executeprogram.com/)
