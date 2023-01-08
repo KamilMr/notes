@@ -1087,5 +1087,30 @@ Symbols like door keys: they hide away some information inside an object and con
 
 ## Garbage collector
 JavaScript doesn’t offer guarantees about when garbage collection happens.
+
+## Equality of values
+`Object.is` same value equality. Points to same value? `==>` `true`.
+
+`NaN` is the only value that’s not Strict Equal to itself.
+
+```javascript
+NaN === NaN // false
+-0 === 0 && 0 === -= // true
+Object.is(0, -0) // false
+```
+BUT `Object.is(NaN, NaN) // true`
+
+How to check if `const size` is `NaN`?
+```javascript
+Number.isNaN(size)
+Object.is(size, NaN)
+size !== size
+```
+
+[More here](https://stackoverflow.com/a/1573715/458193)
+
+### Recap
+- JavaScript has several kinds of equality. They include same value equality, strict equality, and loose equality.
+
 ## General links
 [Execute program](https://www.executeprogram.com/)
