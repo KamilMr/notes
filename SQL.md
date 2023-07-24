@@ -25,3 +25,11 @@ SQL constraints are used to specify rules for the data in a table. Constraints a
 The ALTER TABLE statement is used to add, delete, or modify columns in an existing table.
 
 The ALTER TABLE statement is also used to add and drop various constraints on an existing table.
+
+`ENUM`
+An ENUM is a string object with a value chosen from a list of permitted values that are enumerated explicitly in the column specification at table creation time.
+
+[ENUM](https://dev.mysql.com/doc/refman/8.0/en/enum.html)
+
+example: `ENUM('x-small', 'small', 'medium', 'large', 'x-large')`
+ If an ENUM column is declared NOT NULL, its default value is the first element of the list of permitted values.
