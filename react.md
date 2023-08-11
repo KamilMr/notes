@@ -1,7 +1,6 @@
 # React
 
 ## Hooks
-
 ### useEffect
 - It is mechanism that helps synchronise side effect with state of you component.
 - The Effect Hook lets you perform side effects in function components.
