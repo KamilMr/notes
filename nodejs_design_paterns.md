@@ -1,3 +1,10 @@
+# Asynchronous Control Flow Patterns with Promises and Async/Await
+Promise is an object that gives back result or error of an asynchronous operation. It can be `fulfilled`, `rejected` or `settled` or `pending`.
+
+Async/await is speccial type expression that allows to use await to 'pause'.
+
+Blocking is when the execution of additional JavaScript in the Node.js process must wait until a non-JavaScript operation completes.
+In Node.js, JavaScript that exhibits poor performance due to being CPU intensive rather than waiting on a non-JavaScript operation, such as I/O, isn't typically referred to as blocking.
 # Callbacks and events
 
 ## The observer
